@@ -12,7 +12,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
     
     public final void myinit(){
-        setSize(1100,700);
+        setSize(820,620);
         setResizable(false);
         gamePannel = new GamePannel();
 
