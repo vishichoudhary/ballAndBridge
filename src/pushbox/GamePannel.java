@@ -21,7 +21,7 @@ public class GamePannel extends javax.swing.JPanel {
     int memoryBoard[][] = new int[13][15];//board for last move 
     int playerX,playerY;
     int box1x,box1y,box2x,box2y,box3x,box3y;
-    int win=0,levelwin,moves=0,totalmoves=0,level,maxlevel=2;
+    int win=0,levelwin,moves=0,totalmoves=0,level,maxlevel=3;
     
     Border darkborder = new LineBorder(Color.DARK_GRAY, 1);
     Border lightborder = new LineBorder(Color.lightGray, 1);
@@ -38,7 +38,7 @@ public class GamePannel extends javax.swing.JPanel {
     }//constructor
     
     public final void myinit(){
-        setBounds(20, 20, 820, 620);//our standard game pannel size
+        setSize(820, 620);//our standard game pannel size
         setOpaque(false);//to make buttons transparent
         
         controlPannel.setBounds(40,85,585,495);//ratio 585:495 :: 13:11
@@ -54,7 +54,7 @@ public class GamePannel extends javax.swing.JPanel {
         
         createBox();//creates boxes
         
-        initBoard2();//level one start
+        initBoard1();//level one start
         
     }//my init
     
@@ -70,8 +70,8 @@ public class GamePannel extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(controlPannel,"move to next level","Level Complete",JOptionPane.INFORMATION_MESSAGE);
                 if(level==1)
                     initBoard2();
-      //          if(level==2)
-       //             initBoard3();
+                else if(level==2)
+                    initBoard3();
             }
             else if(level==maxlevel){
                 win=1;
@@ -99,7 +99,7 @@ public class GamePannel extends javax.swing.JPanel {
         for(int i=1;i<12;i++)
             for(int j=1;j<14;j++){
                 if(board[i][j]==0){
-               //   box[i][j].setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bricks1.jpeg")));
+                    box[i][j].setIcon(null);
                     box[i][j].setBorder(brickborder);
                     box[i][j].setFocusPainted( false );
                     box[i][j].setContentAreaFilled(false );//to make buttons transparent
@@ -108,35 +108,47 @@ public class GamePannel extends javax.swing.JPanel {
                 if(board[i][j]==1){
                     box[i][j].setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bricks1.jpeg")));
                     box[i][j].setBorder(brickborder);
+                    box[i][j].setFocusPainted( true );
+                    box[i][j].setContentAreaFilled(true );//to make buttons transparent
                 }
                 if(board[i][j]==2){
                     box[i][j].setIcon(null);
                     box[i][j].setBorder(lightborder);
                     box[i][j].setBackground(Color.white);
+                    box[i][j].setFocusPainted( true );
+                    box[i][j].setContentAreaFilled(true );//to make buttons transparent
                 }
                 if(board[i][j]==3 || board[i][j]==7){
                     box[i][j].setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/boy2.png")));
                     box[i][j].setBorder(lightborder);
+                    box[i][j].setFocusPainted( true );
+                    box[i][j].setContentAreaFilled(true );//to make buttons transparent
                     playerX=j;playerY=i;
                 }
                 if(board[i][j]==4){
                     box[i][j].setBorder(lightborder);
                     box[i][j].setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/red_dot.jpg")));
+                    box[i][j].setFocusPainted( true );
+                    box[i][j].setContentAreaFilled(true );//to make buttons transparent
                 }
                 if(board[i][j]==5){
                     box[i][j].setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/box4.png")));
                     box[i][j].setBorder(darkborder);
+                    box[i][j].setFocusPainted( true );
+                    box[i][j].setContentAreaFilled(true );//to make buttons transparent
                 }
                 if(board[i][j]==6){
                     box[i][j].setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/box5.png")));
                     box[i][j].setBorder(darkborder);
+                    box[i][j].setFocusPainted( true );
+                    box[i][j].setContentAreaFilled(true );//to make buttons transparent
                 }
             }
     } //update box display
    
-    public void initBoard1(){
+    public void initBoard3(){
         levelwin=0;
-        level = 1;
+        level = 3;
         moves=0;
         movesLabel.setText("Moves : "+Integer.toString(moves));
         totalmovesLabel.setText("Total moves : "+Integer.toString(totalmoves));
@@ -190,29 +202,29 @@ public class GamePannel extends javax.swing.JPanel {
         updateBox();//calls update box
     } //initializes board2 
     
-    public void initBoard3(){
+    public void initBoard1(){
         levelwin=0;
-        level = 3;
+        level = 1;
         moves=0;
         movesLabel.setText("Moves : "+Integer.toString(moves));
         totalmovesLabel.setText("Total moves : "+Integer.toString(totalmoves));
         levelLabel.setText("Level : "+Integer.toString(level)+"/"+Integer.toString(maxlevel));
    
         board[0][0]=0; board[0][1]=0; board[0][2]=0; board[0][3]=0; board[0][4]=0; board[0][5]=0; board[0][6]=0; board[0][7]=0; board[0][8]=0; board[0][9]=0; board[0][10]=0; board[0][11]=0; board[0][12]=0; board[0][13]=0; board[0][14]=0;
-        board[1][0]=0; board[1][1]=0; board[1][2]=0; board[1][3]=0; board[1][4]=1; board[1][5]=1; board[1][6]=1; board[1][7]=1; board[1][8]=1; board[1][9]=1; board[1][10]=1; board[1][11]=0; board[1][12]=0; board[1][13]=0; board[1][14]=0; 
-        board[2][0]=0; board[2][1]=1; board[2][2]=1; board[2][3]=1; board[2][4]=1; board[2][5]=2; board[2][6]=2; board[2][7]=2; board[2][8]=2; board[2][9]=2; board[2][10]=1; board[2][11]=0; board[2][12]=0; board[2][13]=0; board[2][14]=0; 
-        board[3][0]=0; board[3][1]=1; board[3][2]=2; board[3][3]=2; board[3][4]=2; board[3][5]=4; board[3][6]=1; board[3][7]=1; board[3][8]=1; board[3][9]=2; board[3][10]=1; board[3][11]=0; board[3][12]=0; board[3][13]=0; board[3][14]=0; 
-        board[4][0]=0; board[4][1]=1; board[4][2]=2; board[4][3]=1; board[4][4]=2; board[4][5]=1; board[4][6]=2; board[4][7]=2; board[4][8]=2; board[4][9]=2; board[4][10]=1; board[4][11]=1; board[4][12]=0; board[4][13]=0; board[4][14]=0; 
-        board[5][0]=0; board[5][1]=1; board[5][2]=2; board[5][3]=1; board[5][4]=2; board[5][5]=5; board[5][6]=2; board[5][7]=5; board[5][8]=1; board[5][9]=4; board[5][10]=2; board[5][11]=1; board[5][12]=0; board[5][13]=0; board[5][14]=0; 
-        board[6][0]=0; board[6][1]=1; board[6][2]=2; board[6][3]=1; board[6][4]=2; board[6][5]=2; board[6][6]=6; board[6][7]=2; board[6][8]=2; board[6][9]=1; board[6][10]=2; board[6][11]=1; board[6][12]=0; board[6][13]=0; board[6][14]=0;
-        board[7][0]=0; board[7][1]=1; board[7][2]=2; board[7][3]=4; board[7][4]=1; board[7][5]=5; board[7][6]=2; board[7][7]=5; board[7][8]=2; board[7][9]=1; board[7][10]=2; board[7][11]=1; board[7][12]=0; board[7][13]=0; board[7][14]=0;
-        board[8][0]=0; board[8][1]=1; board[8][2]=1; board[8][3]=2; board[8][4]=2; board[8][5]=2; board[8][6]=2; board[8][7]=1; board[8][8]=2; board[8][9]=1; board[8][10]=2; board[8][11]=1; board[8][12]=1; board[8][13]=1; board[8][14]=0; 
-        board[9][0]=0; board[9][1]=0; board[9][2]=1; board[9][3]=2; board[9][4]=1; board[9][5]=1; board[9][6]=1; board[9][7]=4; board[9][8]=2; board[9][9]=2; board[9][10]=2; board[9][11]=2; board[9][12]=3; board[9][13]=1; board[9][14]=0;
-        board[10][0]=0;board[10][1]=0;board[10][2]=1;board[10][3]=2;board[10][4]=2;board[10][5]=2;board[10][6]=2;board[10][7]=2;board[10][8]=1;board[10][9]=1;board[10][10]=2;board[10][11]=2;board[10][12]=2;board[10][13]=1;board[10][14]=0;
-        board[11][0]=0;board[11][1]=0;board[11][2]=1;board[11][3]=1;board[11][4]=1;board[11][5]=1;board[11][6]=1;board[11][7]=1;board[11][8]=1;board[11][9]=1;board[11][10]=1;board[11][11]=1;board[11][12]=1;board[11][13]=1;board[11][14]=0;
+        board[1][0]=0; board[1][1]=0; board[1][2]=0; board[1][3]=0; board[1][4]=0; board[1][5]=0; board[1][6]=0; board[1][7]=0; board[1][8]=0; board[1][9]=0; board[1][10]=0; board[1][11]=0; board[1][12]=0; board[1][13]=0; board[1][14]=0; 
+        board[2][0]=0; board[2][1]=0; board[2][2]=0; board[2][3]=0; board[2][4]=0; board[2][5]=0; board[2][6]=0; board[2][7]=0; board[2][8]=0; board[2][9]=0; board[2][10]=0; board[2][11]=0; board[2][12]=0; board[2][13]=0; board[2][14]=0; 
+        board[3][0]=0; board[3][1]=0; board[3][2]=0; board[3][3]=0; board[3][4]=0; board[3][5]=0; board[3][6]=0; board[3][7]=0; board[3][8]=0; board[3][9]=0; board[3][10]=0; board[3][11]=0; board[3][12]=0; board[3][13]=0; board[3][14]=0; 
+        board[4][0]=0; board[4][1]=0; board[4][2]=1; board[4][3]=1; board[4][4]=1; board[4][5]=1; board[4][6]=0; board[4][7]=0; board[4][8]=1; board[4][9]=1; board[4][10]=1; board[4][11]=1; board[4][12]=1; board[4][13]=0; board[4][14]=0; 
+        board[5][0]=0; board[5][1]=1; board[5][2]=1; board[5][3]=2; board[5][4]=2; board[5][5]=1; board[5][6]=0; board[5][7]=0; board[5][8]=1; board[5][9]=2; board[5][10]=2; board[5][11]=2; board[5][12]=1; board[5][13]=0; board[5][14]=0; 
+        board[6][0]=0; board[6][1]=1; board[6][2]=2; board[6][3]=5; board[6][4]=2; board[6][5]=1; board[6][6]=1; board[6][7]=1; board[6][8]=1; board[6][9]=5; board[6][10]=2; board[6][11]=2; board[6][12]=1; board[6][13]=0; board[6][14]=0;
+        board[7][0]=0; board[7][1]=1; board[7][2]=2; board[7][3]=2; board[7][4]=5; board[7][5]=4; board[7][6]=4; board[7][7]=4; board[7][8]=4; board[7][9]=2; board[7][10]=5; board[7][11]=2; board[7][12]=1; board[7][13]=0; board[7][14]=0;
+        board[8][0]=0; board[8][1]=1; board[8][2]=1; board[8][3]=2; board[8][4]=2; board[8][5]=2; board[8][6]=2; board[8][7]=1; board[8][8]=2; board[8][9]=3; board[8][10]=2; board[8][11]=1; board[8][12]=1; board[8][13]=0; board[8][14]=0; 
+        board[9][0]=0; board[9][1]=0; board[9][2]=1; board[9][3]=1; board[9][4]=1; board[9][5]=1; board[9][6]=1; board[9][7]=1; board[9][8]=1; board[9][9]=1; board[9][10]=1; board[9][11]=1; board[9][12]=0; board[9][13]=0; board[9][14]=0;
+        board[10][0]=0;board[10][1]=0;board[10][2]=0;board[10][3]=0;board[10][4]=0;board[10][5]=0;board[10][6]=0;board[10][7]=0;board[10][8]=0;board[10][9]=0;board[10][10]=0;board[10][11]=0;board[10][12]=0;board[10][13]=0;board[10][14]=0;
+        board[11][0]=0;board[11][1]=0;board[11][2]=0;board[11][3]=0;board[11][4]=0;board[11][5]=0;board[11][6]=0;board[11][7]=0;board[11][8]=0;board[11][9]=0;board[11][10]=0;board[11][11]=0;board[11][12]=0;board[11][13]=0;board[11][14]=0;
         board[12][0]=0;board[12][1]=0;board[12][2]=0;board[12][3]=0;board[12][4]=0;board[12][5]=0;board[12][6]=0;board[12][7]=0;board[12][8]=0;board[12][9]=0;board[12][10]=0;board[12][11]=0;board[12][12]=0;board[12][13]=0;board[12][14]=0;
    
-        playerX=12;playerY=9;
+        playerX=9;playerY=8;
         
         lastMove();
         updateBox();//calls update box
@@ -380,6 +392,7 @@ public class GamePannel extends javax.swing.JPanel {
         levelLabel = new javax.swing.JLabel();
         movesLabel = new javax.swing.JLabel();
         totalmovesLabel = new javax.swing.JLabel();
+        footerLabel = new javax.swing.JLabel();
         background_Image = new javax.swing.JLabel();
 
         setLayout(null);
@@ -453,6 +466,12 @@ public class GamePannel extends javax.swing.JPanel {
         add(totalmovesLabel);
         totalmovesLabel.setBounds(560, 20, 240, 40);
 
+        footerLabel.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        footerLabel.setForeground(new java.awt.Color(255, 244, 244));
+        footerLabel.setText("made with love by Team .EXE");
+        add(footerLabel);
+        footerLabel.setBounds(40, 590, 250, 20);
+
         background_Image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/gamePannelBackground.jpg"))); // NOI18N
         add(background_Image);
         background_Image.setBounds(0, 0, 820, 620);
@@ -478,8 +497,11 @@ public class GamePannel extends javax.swing.JPanel {
 
     private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpButtonActionPerformed
         JOptionPane.showMessageDialog(controlPannel,"* use W A S D keys to move player\n"
-                                            +"* Red dot is your target point\n"
-                                            +"* Yellow box is to be placed on target point (Red Dot)\n"                                           
+                                            +"* Red dots are your target point\n"
+                                            +"* Yellow boxes are to be placed on target points (Red Dot)\n"
+                                            +"* you can undo only the last move\n"
+                                            +"* There are total 3 levels\n"
+                                            +"* Each level carries 10 points\n"
                                             ,"Instructions"
                                             ,JOptionPane.INFORMATION_MESSAGE                                    
         );
@@ -489,6 +511,7 @@ public class GamePannel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel background_Image;
     private javax.swing.JPanel controlPannel;
+    private javax.swing.JLabel footerLabel;
     private javax.swing.JLabel heading;
     private javax.swing.JButton helpButton;
     private javax.swing.JLabel levelLabel;
