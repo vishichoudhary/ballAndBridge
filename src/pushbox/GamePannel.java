@@ -24,20 +24,20 @@ public class GamePannel extends javax.swing.JPanel {
     int ball=0;
     int oldball=0;
     int temp1=0,temp2=0,temp3=0,prevb1i=0,prevb1j=0,prevb2i=0,prevb2j=0,prevb3i=0,prevb3j=0,temp=0,one,two;
-    int n=0,leveli,levelj;
+    int n=0,leveli,levelj,levelno=1;
    public GamePannel() {
       
         initComponents();
         myinit();
         
     }
-   
-   public void level1()
+    public void level1()
    {   
-       boxvalue=new int[12][17];
        box=new JButton[11][16];
        leveli=11;
        levelj=16;
+       levelno=1;
+       boxvalue=new int[12][17];
        n=3;
        for(int i=1;i<leveli;i++)
            for(int j=1;j<levelj;j++)
@@ -63,12 +63,33 @@ public class GamePannel extends javax.swing.JPanel {
       boxvalue[6][12]=24;
       boxvalue[3][10]=24;
    }
-    
+    public void level2(){
+       box=new JButton[11][21];
+       leveli=11;
+       levelj=21;
+       boxvalue=new int[12][22];
+       levelno=2;
+       temp1=0;temp2=0;temp3=0;prevb1i=0;prevb1j=0;prevb2i=0;prevb2j=0;prevb3i=0;prevb3j=0;temp=0;
+       for(int i=1;i<leveli;i++)
+           for(int j=1;j<levelj;j++)
+           {
+               if(i==1  || i==10 || j==1 || j==20 )
+                   
+               { 
+                   boxvalue[i][j]=22;
+               }
+               else           
+               boxvalue[i][j]=-1;
+           }
+       boxvalue[9][2]=0;
+       boxvalue[9][6]=1;
+       n=2;
+    }
     public final void myinit(){
         setSize(820, 620);//our standard game pannel size
         setOpaque(false);//to make buttons transparent
         controlPannel.setBounds(10,55,700,500);
-        level1();
+        level2();
         controlPannel.setFocusable(true);
         controlPannel.setOpaque(false);
         controlPannel.setFocusTraversalKeysEnabled(false);
@@ -157,8 +178,8 @@ public class GamePannel extends javax.swing.JPanel {
                            }
                             boxvalue[i][j]=-1;
                             boxvalue[i][j-1]=ball;
-                             level1open(i,j-1);
-                         
+                             if(levelno==1) level1open(i,j-1);
+                             if(levelno==2) level2open(i,j-1);
                             break level1;
                         }
                         }
@@ -211,8 +232,8 @@ public class GamePannel extends javax.swing.JPanel {
                            wincheck(i-1,j);  
                           boxvalue[i][j]=-1;
                             boxvalue[i-1][j]=ball;
-                             level1open(i-1,j);
-                            
+                             if(levelno==1) level1open(i-1,j);
+                            if(levelno==2) level2open(i-1,j);
                             break level1;
                         }}
                         
@@ -263,8 +284,8 @@ public class GamePannel extends javax.swing.JPanel {
                             wincheck(i+1,j);
                             boxvalue[i][j]=-1;
                             boxvalue[i+1][j]=ball;
-                             level1open(i+1,j);
-                             
+                             if(levelno==1) level1open(i+1,j);
+                             if(levelno==2) level2open(i+1,j);
                             break level1;
                         }}
                         
@@ -286,7 +307,7 @@ public class GamePannel extends javax.swing.JPanel {
                     for(int j=1;j<levelj;j++)
                     {
                        if(boxvalue[i][j+1]!=0 && boxvalue[i][j+1]!=1 && boxvalue[i][j+1]!=2 && boxvalue[i][j+1]!=3 && boxvalue[i][j+1]!=4 ){
-                        if(boxvalue[i][j]==ball && j<15 && boxvalue[i][j+1]!=22 && boxvalue[i][j+1]!=24)
+                        if(boxvalue[i][j]==ball && j<levelj-1 && boxvalue[i][j+1]!=22 && boxvalue[i][j+1]!=24)
                         {
                             temp=444;
                             if(boxvalue[i][j+1]==25)
@@ -314,8 +335,8 @@ public class GamePannel extends javax.swing.JPanel {
                             wincheck(i,j+1);
                                boxvalue[i][j]=-1;
                             boxvalue[i][j+1]=ball;
-                             level1open(i,j+1);
-                             
+                            if(levelno==1) level1open(i,j+1);
+                            if(levelno==2) level2open(i+1,j);
                             break level1;
                         }}
                     }
@@ -348,6 +369,9 @@ public class GamePannel extends javax.swing.JPanel {
                     if(ball==2 &&(i!=5 || j!=6)) boxvalue[6][7]=24;
                     if(ball==1 && i==9 && j==9) boxvalue[6][2]=-1;
                     if(ball==1 && (i!=9 || j!=9)) boxvalue[6][2]=24;
+    }
+    public void level2open(int i,int j){
+        
     }
         
     public int  wincheck(int i,int j)
