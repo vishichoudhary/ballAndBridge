@@ -14,21 +14,38 @@ public class GamePannel extends javax.swing.JPanel {
     */
      
     
-    JButton[][] box ;//= new JButton[11][16];
-    int[][] boxvalue;//=new int[12][17];
+    JButton[][] box ;
+    int[][] boxvalue;
     int ball=0;
     int oldball=0;
     int temp1=0,temp2=0,temp3=0,temp4=0,temp5=0,prevb1i=0,prevb1j=0,prevb2i=0,prevb2j=0,prevb3i=0,prevb3j=0,temp=0,one,two,prevb4i=0,prevb4j=0,prevb5i=0,prevb5j=0;
     int n=0,leveli,levelj,levelno=1;
-   
+     KeyAdapter hello=new KeyAdapter(){
+            public void keyTyped(KeyEvent e){
+                keyInput(e);
+            }
+        }; 
     public GamePannel() {
-      
+  
         initComponents();
         myinit();
         
     }
+    public final void myinit(){
+        setSize(820, 620);//our standard game pannel size
+        setOpaque(false);//to make buttons transparent
+        controlPannel.setBounds(10,55,700,480);
+        if(levelno==1) level1();
+        if(levelno==2) level2();
+        controlPannel.setFocusable(true);
+        controlPannel.setOpaque(false);
+        controlPannel.setFocusTraversalKeysEnabled(false);
+        createBox();//creates boxes     
+    }//my init
+    
     public void level1()
    {   
+       updateBall();
        box=new JButton[11][16];
        leveli=11;
        levelj=16;
@@ -65,7 +82,7 @@ public class GamePannel extends javax.swing.JPanel {
        levelj=21;
        boxvalue=new int[12][22];
        levelno=2;
-       temp1=0;temp2=0;temp3=0;temp4=0;temp5=0;prevb1i=0;prevb1j=0;prevb2i=0;prevb2j=0;prevb3i=0;prevb3j=0;temp=0;prevb4i=0;prevb4j=0;prevb5i=0;prevb5j=0;
+       ball=0;temp1=0;temp2=0;temp3=0;temp4=0;temp5=0;prevb1i=0;prevb1j=0;prevb2i=0;prevb2j=0;prevb3i=0;prevb3j=0;temp=0;prevb4i=0;prevb4j=0;prevb5i=0;prevb5j=0;
        for(int i=1;i<leveli;i++)
            for(int j=1;j<levelj;j++)
            {
@@ -99,18 +116,9 @@ public class GamePannel extends javax.swing.JPanel {
        boxvalue[3][8]=25;
        boxvalue[5][15]=25;
        boxvalue[8][8]=24;
+       updateBall();
        n=5;
     }
-    public final void myinit(){
-        setSize(820, 620);//our standard game pannel size
-        setOpaque(false);//to make buttons transparent
-        controlPannel.setBounds(10,55,700,480);
-        level2();
-        controlPannel.setFocusable(true);
-        controlPannel.setOpaque(false);
-        controlPannel.setFocusTraversalKeysEnabled(false);
-        createBox();//creates boxes     
-    }//my init
     
     public void createBox(){
         controlPannel.setLayout(new GridLayout(10,15,0,0));
@@ -122,16 +130,17 @@ public class GamePannel extends javax.swing.JPanel {
                 controlPannel.add(box[i][j]);
             }
         controlPannel.grabFocus();
-        controlPannel.addKeyListener(new KeyAdapter(){
+        /*controlPannel.addKeyListener(new KeyAdapter(){
             public void keyTyped(KeyEvent e){
                 keyInput(e);
             }
-        }); 
+        });*/
+        controlPannel.addKeyListener(hello);
      
-        drawbox(ball);
+        drawbox();
     }
  
-    public void drawbox(int inball)
+    public void drawbox()
     {    
            //JOptionPane.showMessageDialog(null,"");
          for(int i=1;i<leveli;i++)
@@ -173,8 +182,9 @@ public class GamePannel extends javax.swing.JPanel {
                         if(boxvalue[i][j]==ball && j>1 && boxvalue[i][j-1]!=22 && boxvalue[i][j-1]!=24 )
                         {
                             temp=111;
-                            wincheck(i,j-1);
-                            if(boxvalue[i][j-1]==25)
+                           int re= wincheck(i,j-1);
+                           if(re==1) return; 
+                           if(boxvalue[i][j-1]==25)
                            {
                               if(ball==0)
                               {
@@ -223,13 +233,14 @@ public class GamePannel extends javax.swing.JPanel {
                if(temp3==0 && ball ==2 && temp==111 ) prev(prevb3i,prevb3j);
                if(temp4==0 && ball ==3 && temp==111 ) prev(prevb4i,prevb4j);
                if(temp5==0 && ball ==4 && temp==111 ) prev(prevb5i,prevb5j);
-               drawbox(ball);
+               drawbox();
                 if(ball==0 && temp==111)  temp1=0;
                 if(ball==1 && temp==111)  temp2=0;
                 if(ball==2 && temp==111)  temp3=0;
                 if(ball==3 && temp==111)  temp4=0;
                 if(ball==4 && temp==111)  temp5=0;
                 temp=0;
+            
                  
             }
             if(input=='w' || input=='W')
@@ -243,6 +254,8 @@ public class GamePannel extends javax.swing.JPanel {
                         if(boxvalue[i][j]==ball && i>1 && boxvalue[i-1][j]!=22 && boxvalue[i-1][j]!=24)
                         {
                             temp=222;
+                            int re= wincheck(i-1,j); 
+                            if(re==1) return;
                           if(boxvalue[i-1][j]==25)
                            {
                               if(ball==0)
@@ -278,7 +291,7 @@ public class GamePannel extends javax.swing.JPanel {
 
                                
                            }
-                           wincheck(i-1,j);  
+                           
                           boxvalue[i][j]=-1;
                             boxvalue[i-1][j]=ball;
                              if(levelno==1) level1open(i-1,j);
@@ -292,7 +305,7 @@ public class GamePannel extends javax.swing.JPanel {
                if(temp3==0 && ball ==2 && temp==222 )  prev(prevb3i,prevb3j);
                if(temp4==0 && ball ==3 && temp==222 )  prev(prevb4i,prevb4j); 
                if(temp5==0 && ball ==4 && temp==222 )  prev(prevb5i,prevb5j); 
-               drawbox(ball);
+               drawbox();
                 if(ball==0 && temp==222)   temp1=0;
                 if(ball==1 && temp==222)   temp2=0;
                 if(ball==2 && temp==222)   temp3=0;
@@ -312,6 +325,8 @@ public class GamePannel extends javax.swing.JPanel {
                         if(boxvalue[i][j]==ball && i<10 && boxvalue[i+1][j]!=22 && boxvalue[i+1][j]!=24)
                         {
                             temp=333;
+                            int re= wincheck(i+1,j);
+                            if(re==1) return ;
                             if(boxvalue[i+1][j]==25)
                            {
                                 if(ball==0)
@@ -346,7 +361,7 @@ public class GamePannel extends javax.swing.JPanel {
                               }
                              
                            }
-                            wincheck(i+1,j);
+                           
                             boxvalue[i][j]=-1;
                             boxvalue[i+1][j]=ball;
                              if(levelno==1) level1open(i+1,j);
@@ -361,7 +376,7 @@ public class GamePannel extends javax.swing.JPanel {
                 if(temp3==0 && ball ==2 && temp==333 )  prev(prevb3i,prevb3j);
                 if(temp4==0 && ball ==3 && temp==333 )  prev(prevb4i,prevb4j);
                 if(temp5==0 && ball ==4 && temp==333 )  prev(prevb5i,prevb5j);
-                drawbox(ball);   
+                drawbox();   
                 if(ball==0 && temp==333)  temp1=0;
                 if(ball==1 && temp==333)  temp2=0;  
                 if(ball==2 && temp==333)  temp3=0;
@@ -379,6 +394,8 @@ public class GamePannel extends javax.swing.JPanel {
                         if(boxvalue[i][j]==ball && j<levelj-1 && boxvalue[i][j+1]!=22 && boxvalue[i][j+1]!=24)
                         {
                             temp=444;
+                            int re=wincheck(i,j+1);
+                            if(re==1) return;
                             if(boxvalue[i][j+1]==25)
                            {
                                 if(ball==0)
@@ -413,7 +430,7 @@ public class GamePannel extends javax.swing.JPanel {
                               }
                               
                            }
-                            wincheck(i,j+1);
+                            
                                boxvalue[i][j]=-1;
                             boxvalue[i][j+1]=ball;
                             if(levelno==1) level1open(i,j+1);
@@ -426,7 +443,7 @@ public class GamePannel extends javax.swing.JPanel {
                 if(temp3==0 && ball ==2 && temp==444 )      prev(prevb3i,prevb3j);
                  if(temp4==0 && ball ==3 && temp==444 )      prev(prevb4i,prevb4j);
                 if(temp5==0 && ball ==4 && temp==444 )      prev(prevb5i,prevb5j);
-                drawbox(ball);
+                drawbox();
                 if(ball==0 && temp==444)    temp1=0;
                 if(ball==1 && temp==444)    temp2=0;
                 if(ball==2 && temp==444)    temp3=0;
@@ -435,7 +452,10 @@ public class GamePannel extends javax.swing.JPanel {
                 temp=0;
               
             }
-            if(input==KeyEvent.VK_SPACE)  ball=(ball+1)%n;
+            if(input==KeyEvent.VK_SPACE) {
+                ball=(ball+1)%n;
+                    updateBall();
+            }
                                
     }
      public void prev(int i,int j)
@@ -478,15 +498,34 @@ public class GamePannel extends javax.swing.JPanel {
         
     public int  wincheck(int i,int j)
     {
-        if(boxvalue[i][j]==23)  JOptionPane.showMessageDialog(null,"Yeah you win");
-
-        return 10;
+        if(boxvalue[i][j]==23)
+        {
+            JOptionPane.showMessageDialog(null,"Yeah you win");
+            if(levelno==1)
+            {    
+                    levelno=2;
+                    controlPannel.removeAll();
+                    controlPannel.repaint();
+                    controlPannel.removeKeyListener(hello);
+                    level2();
+                    createBox();
+                return 1;    
+                                    
+            }
+        }
+     return 0;
+    }
+    public void updateBall()
+    {
+        BallLabel.setText("Current Ball is :- "+Integer.toString(ball+1));
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         controlPannel = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        BallLabel = new javax.swing.JLabel();
         background_Image = new javax.swing.JLabel();
 
         setLayout(null);
@@ -515,22 +554,46 @@ public class GamePannel extends javax.swing.JPanel {
         controlPannel.setBounds(20, 30, 585, 495);
         controlPannel.getAccessibleContext().setAccessibleName("");
 
+        jButton1.setText("Reset");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        add(jButton1);
+        jButton1.setBounds(720, 200, 90, 32);
+
+        BallLabel.setText("Current Ball is :- ");
+        add(BallLabel);
+        BallLabel.setBounds(150, 560, 350, 20);
+
         background_Image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pushbox/vishiGamePanel1.jpg"))); // NOI18N
         add(background_Image);
         background_Image.setBounds(0, 0, 820, 620);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void controlPannelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_controlPannelMouseClicked
-controlPannel.grabFocus();
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       
+        initComponents();
+        myinit();
+        drawbox();
+        controlPannel.grabFocus();
 // TODO add your handling code here:
-    }//GEN-LAST:event_controlPannelMouseClicked
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void controlPannelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_controlPannelMouseEntered
-      controlPannel.grabFocus();  // TODO add your handling code here:
+        controlPannel.grabFocus();  // TODO add your handling code here:
     }//GEN-LAST:event_controlPannelMouseEntered
 
+    private void controlPannelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_controlPannelMouseClicked
+        controlPannel.grabFocus();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_controlPannelMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel BallLabel;
     private javax.swing.JLabel background_Image;
     private javax.swing.JPanel controlPannel;
+    private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables
 }
