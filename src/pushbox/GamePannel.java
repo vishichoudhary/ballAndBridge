@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 public class GamePannel extends javax.swing.JPanel {
     
     /*   new
-    -1 ==null 0==ball  1== second ball  2,3,4,=other ball    22==gray    23==green    24==brown    25==yellow
+    -1 ==null 0==greenball  1== red ball  2==blue ball,3==blackBall,4=pink ball    22==gray    23==green    24==brown    25==yellow
     */
      
     
@@ -19,22 +19,24 @@ public class GamePannel extends javax.swing.JPanel {
     int ball=0;
     int oldball=0;
     int temp1=0,temp2=0,temp3=0,temp4=0,temp5=0,prevb1i=0,prevb1j=0,prevb2i=0,prevb2j=0,prevb3i=0,prevb3j=0,temp=0,one,two,prevb4i=0,prevb4j=0,prevb5i=0,prevb5j=0;
-    int n=0,leveli,levelj,levelno=2;
+    int n=0,leveli,levelj,levelno=1;
      KeyAdapter hello=new KeyAdapter(){
             public void keyTyped(KeyEvent e){
                 keyInput(e);
             }
         }; 
+     int click=1;
     public GamePannel() {
-  
+         
         initComponents();
         myinit();
         
     }
+    
     public final void myinit(){
         setSize(820, 620);//our standard game pannel size
         setOpaque(false);//to make buttons transparent
-        controlPannel.setBounds(10,55,700,480);
+        controlPannel.setBounds(10,70,700,480);
         if(levelno==1) level1();
         if(levelno==2) level2();
         controlPannel.setFocusable(true);
@@ -45,6 +47,8 @@ public class GamePannel extends javax.swing.JPanel {
     
     public void level1()
    {   
+      if(click==1)
+      showInfo();
        updateBall();
        box=new JButton[11][16];
        leveli=11;
@@ -146,15 +150,15 @@ public class GamePannel extends javax.swing.JPanel {
          for(int i=1;i<leveli;i++)
             for(int j=1;j<levelj;j++){
              if(boxvalue[i][j]==0)
-                 box[i][j].setIcon(new javax.swing.ImageIcon(getClass().getResource("ball.png")));
+                 box[i][j].setIcon(new javax.swing.ImageIcon(getClass().getResource("greenball.png")));
               if(boxvalue[i][j]==1)
-                 box[i][j].setIcon(new javax.swing.ImageIcon(getClass().getResource("ball.png")));
+                 box[i][j].setIcon(new javax.swing.ImageIcon(getClass().getResource("redball.png")));
               if(boxvalue[i][j]==2)
-                 box[i][j].setIcon(new javax.swing.ImageIcon(getClass().getResource("ball.png")));
+                 box[i][j].setIcon(new javax.swing.ImageIcon(getClass().getResource("blueball.png")));
               if(boxvalue[i][j]==3)
-                 box[i][j].setIcon(new javax.swing.ImageIcon(getClass().getResource("ball.png")));
+                 box[i][j].setIcon(new javax.swing.ImageIcon(getClass().getResource("blackball.png")));
               if(boxvalue[i][j]==4)
-                 box[i][j].setIcon(new javax.swing.ImageIcon(getClass().getResource("ball.png")));
+                 box[i][j].setIcon(new javax.swing.ImageIcon(getClass().getResource("pinkball.png")));
               if(boxvalue[i][j]==22)
                  box[i][j].setIcon(new javax.swing.ImageIcon(getClass().getResource("graybox.png")));
               if(boxvalue[i][j]==23)
@@ -500,9 +504,10 @@ public class GamePannel extends javax.swing.JPanel {
     {
         if(boxvalue[i][j]==23)
         {
-            JOptionPane.showMessageDialog(null,"Yeah you win");
+            
             if(levelno==1)
             {    
+                JOptionPane.showMessageDialog(null,"Yeah level 1 cleared, Go to next level");
                     levelno=2;
                     controlPannel.removeAll();
                     controlPannel.repaint();
@@ -512,12 +517,62 @@ public class GamePannel extends javax.swing.JPanel {
                 return 1;    
                                     
             }
+            if(levelno==2)
+            {
+                JOptionPane.showMessageDialog(null,"Yeah you win this game go and play other games");
+            }
         }
      return 0;
     }
     public void updateBall()
+    {   
+        String str="";
+        switch(ball)
+        {
+            case 0:
+            {
+                str="SkyBlue";
+                break;
+            }
+            case 1:
+            {
+                str="Red";
+                break;
+            }
+            case 2:
+            {
+                str="Blue";
+                break;
+            }
+            case 3:
+            {
+                str="Black";
+                break;
+            }
+            case 4:
+            {
+                str="Pink";
+                break;
+            }
+        }
+        BallLabel.setText("Current Ball is :- "+str);
+    }
+    public void showInfo()
     {
-        BallLabel.setText("Current Ball is :- "+Integer.toString(ball+1));
+        String str="1) Use W to move ball up\n"
+                + "2) Use A to move ball left\n"
+                + "3) Use S to move ball down\n"
+                + "4) Use D to move ball right\n"
+                + "5) Use SPACE to move to other ball\n"
+                + "6) To win make AnyColor Ball to reach green box\n"
+                + "7) Put specific ball on specific Yellow box that will open a specific Brown box\n"
+                + "8) Current ball shows the current ball in movement\n"
+                + "9) RESET button to reset the game\n"
+                + "10) INSTRUCTION Button to show instruction\n"
+                + "11) If keys not working Or you loose your focus from\n"
+                + "    main game use FOCUS button given in bottom-right";
+        JOptionPane.showMessageDialog(null, str, "INSTRUCTIONS", HEIGHT);
+        click++;
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -526,6 +581,9 @@ public class GamePannel extends javax.swing.JPanel {
         controlPannel = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         BallLabel = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         background_Image = new javax.swing.JLabel();
 
         setLayout(null);
@@ -551,7 +609,7 @@ public class GamePannel extends javax.swing.JPanel {
         );
 
         add(controlPannel);
-        controlPannel.setBounds(20, 30, 585, 495);
+        controlPannel.setBounds(20, 60, 560, 440);
         controlPannel.getAccessibleContext().setAccessibleName("");
 
         jButton1.setText("Reset");
@@ -563,11 +621,38 @@ public class GamePannel extends javax.swing.JPanel {
         add(jButton1);
         jButton1.setBounds(720, 200, 90, 32);
 
+        BallLabel.setFont(new java.awt.Font("Cantarell", 0, 18)); // NOI18N
+        BallLabel.setForeground(java.awt.Color.white);
         BallLabel.setText("Current Ball is :- ");
         add(BallLabel);
-        BallLabel.setBounds(150, 560, 350, 20);
+        BallLabel.setBounds(260, 560, 220, 20);
 
-        background_Image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pushbox/vishiGamePanel1.jpg"))); // NOI18N
+        jLabel1.setBackground(java.awt.Color.white);
+        jLabel1.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 24)); // NOI18N
+        jLabel1.setForeground(java.awt.Color.white);
+        jLabel1.setText("                       Ball And Bridge");
+        add(jLabel1);
+        jLabel1.setBounds(120, 20, 420, 29);
+
+        jButton2.setText("Rules");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        add(jButton2);
+        jButton2.setBounds(720, 270, 90, 32);
+
+        jButton3.setText("Focus");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        add(jButton3);
+        jButton3.setBounds(730, 510, 80, 32);
+
+        background_Image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pushbox/try1.jpg"))); // NOI18N
         add(background_Image);
         background_Image.setBounds(0, 0, 820, 620);
     }// </editor-fold>//GEN-END:initComponents
@@ -594,6 +679,7 @@ public class GamePannel extends javax.swing.JPanel {
                     level2();
                     createBox();
         }
+        controlPannel.grabFocus(); 
 // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -606,10 +692,22 @@ public class GamePannel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_controlPannelMouseClicked
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+              showInfo(); 
+              controlPannel.grabFocus();// TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+            controlPannel.grabFocus();        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BallLabel;
     private javax.swing.JLabel background_Image;
     private javax.swing.JPanel controlPannel;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
