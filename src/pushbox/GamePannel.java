@@ -19,7 +19,7 @@ public class GamePannel extends javax.swing.JPanel {
     int ball=0;
     int oldball=0;
     int temp1=0,temp2=0,temp3=0,temp4=0,temp5=0,prevb1i=0,prevb1j=0,prevb2i=0,prevb2j=0,prevb3i=0,prevb3j=0,temp=0,one,two,prevb4i=0,prevb4j=0,prevb5i=0,prevb5j=0;
-    int n=0,leveli,levelj,levelno=1;
+    int n=0,leveli,levelj,levelno=2;
      KeyAdapter hello=new KeyAdapter(){
             public void keyTyped(KeyEvent e){
                 keyInput(e);
@@ -491,9 +491,9 @@ public class GamePannel extends javax.swing.JPanel {
       if(ball==3 && i==5 && j==15) boxvalue[8][8]=-1;
       if(ball==3 && (i!=5 || j!=15)) boxvalue[8][8]=24; 
       if(ball==0 && i==9 && j==2) boxvalue[8][8]=-1;
-      if(ball==0 && (i!=9 || j!=2)) boxvalue[8][8]=24;
+      if(ball==0 && (i!=9 || j!=2) && boxvalue[5][15]!=3) boxvalue[8][8]=24;
       if(ball==0 && i==7 && j==2) boxvalue[8][9]=-1;
-      if(ball==0 && (i!=7 || j!=2)) boxvalue[8][9]=24;
+      if(ball==0 && (i!=7 || j!=2) && boxvalue[3][8]!=2) boxvalue[8][9]=24;
     }
         
     public int  wincheck(int i,int j)
@@ -574,10 +574,26 @@ public class GamePannel extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        
-        initComponents();
-        myinit();
-        drawbox();
-        controlPannel.grabFocus();
+        if(levelno==1)
+            {    
+                    levelno=1;
+                    controlPannel.removeAll();
+                    controlPannel.repaint();
+                    controlPannel.removeKeyListener(hello);
+                    level1();
+                    createBox();
+                   
+                                    
+            }
+        if(levelno==2)
+        {
+                    levelno=2;
+                    controlPannel.removeAll();
+                    controlPannel.repaint();
+                    controlPannel.removeKeyListener(hello);
+                    level2();
+                    createBox();
+        }
 // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
