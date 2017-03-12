@@ -53,6 +53,7 @@ public class MainFrame extends javax.swing.JFrame {
                 new MainFrame().setVisible(true);
             }
         });
+        new MainFrame().setIconImage(new imageIcon(getClass().getClassLoader().getResource("mainicon.jpg")));
     }
 
     //my variables
