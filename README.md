@@ -22,3 +22,11 @@ Click `RESET` button resets the game
 Click `INSTRUCTIONS` button to view the instructions again
 
 If keys are not working or you lose focus from the main screen(in case you are multitasking) use `FOCUS` button given in     bottom-right
+
+## Contributions
+
+This is an open source project and contributions are always welcome 
+
+Please read the [Contribution Rules](https://github.com/vishichoudhary/ballAndBridge/blob/master/CONTRIBUTING.md) to see
+
+how to contribute to this project
