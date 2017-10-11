@@ -1,7 +1,7 @@
 In order to make more contributions to this game, please open a new branch using
 
 ```git
-git checkout -b <name-of-nwe-branch>
+git checkout -b <name-of-new-branch>
 ```
 The default contributing branch is dev-branch
 
