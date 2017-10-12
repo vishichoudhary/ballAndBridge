@@ -1,63 +1,75 @@
 package pushbox;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.WindowConstants;
+
 /**
  *
  * @author srb
  */
-public class MainFrame extends javax.swing.JFrame {
+public class MainFrame extends JFrame {
 
-    public MainFrame() {
-        initComponents();
-        myinit();
-    }
-    
-    public final void myinit(){
-        setSize(820,620);
-        setResizable(false);
-        gamePannel = new GamePannel();
+	public MainFrame() {
+		initComponents();
+		myinit();
+	}
 
-        add(gamePannel);
-    }
-    
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+	public void myinit() {
+		setSize(820, 620);
+		setResizable(false);
+		gamePannel = new GamePannel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(null);
+		add(gamePannel);
+		
+		try {
+			setIconImage(ImageIO.read(MainFrame.class.getResource("mainicon.jpg")));
+		} catch (IOException e) {
+			Logger.getLogger(MainFrame.class.getName()).log(Level.WARNING, null, e);
+		}
+		setVisible(true);
+	}
 
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
+	// <editor-fold defaultstate="collapsed" desc="Generated
+	// Code">//GEN-BEGIN:initComponents
+	private void initComponents() {
 
-    public static void main(String args[]) {
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		getContentPane().setLayout(null);
 
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+		pack();
+	}// </editor-fold>//GEN-END:initComponents
 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainFrame().setVisible(true);
-            }
-        });
-        new MainFrame().setIconImage(new imageIcon(getClass().getClassLoader().getResource("mainicon.jpg")));
-    }
+	public static void main(String args[]) {
 
-    //my variables
-    GamePannel gamePannel;
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    // End of variables declaration//GEN-END:variables
+		try {
+			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+				if ("Nimbus".equals(info.getName())) {
+					UIManager.setLookAndFeel(info.getClassName());
+					break;
+				}
+			}
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException ex) {
+			Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
+		java.awt.EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				new MainFrame();
+			}
+		});
+	}
+
+	// my variables
+	private GamePannel gamePannel;
+	// Variables declaration - do not modify//GEN-BEGIN:variables
+	// End of variables declaration//GEN-END:variables
 }
